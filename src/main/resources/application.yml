@@ -4,3 +4,13 @@ server:
     context-path: /fake-suomifi-tunnistus
   ssl:
     enabled: false
+management:
+  endpoint:
+    health:
+      enabled: true
+cas:
+  monitor:
+    endpoints:
+      endpoint:
+        health:
+          access: PERMIT
