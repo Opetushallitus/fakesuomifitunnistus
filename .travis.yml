@@ -1,0 +1,36 @@
+sudo: required
+language: java
+jdk:
+  - openjdk11
+services:
+  - docker
+cache:
+  directories:
+    - $HOME/.m2
+env:
+  global:
+    # AWS_ACCESS_KEY_ID
+    - secure: "HjgIYrm6B0gAeFcQ1ruKGbP+r1gAtzstxHEXsZMs0H60sCtChN5EBoIJ2wdMxanzAR1P2mlTSxZqqUr4+ELlCBjBtQRcZUmOAxvd0HC49v+8ANiXOw7Vv2CsPPXMX9Cx2RzKxJ44Odb9nwmoUYwt2d9dOL1iuO1TiFqMxQMQUf2UqyxyuYDo7yjdKX+r5EgJGrjJqq1jXiBIotga2tRMj/BlPW/74u82euCI1u/Jyit6nbYw+4+tBfgm0BvLBrWCsdQyOe2+4nzxiG16AIg3m+YQL9bIwOcj3btqH/qN0+FYbBi/ITa6meSowrUN0tcS5OOXK3KqHoF8HI18PtOq080s3cTXWRDmxU2LIZtxK4fru3JdB5OoSJvNL6pcJAw/76ImEcnWrtL7JIfa5pV84QRvfqAZoWh9fdKfW+rk+dJBU07cvlK6HEh9L1XN3h6Yoxkg4ZPPVIrnNuH//kmbQEneadocEQiSFQZOCoQqgNkQdN6O3LpZlHSmIQS6SmTn8/VziJkNbnrtJPLRyW+u6MY9bAm8UfX2iVstjJPvWnKHJdMgnS0NN1YyJMpnS2duxAeXh869R3174zkWbuX407WSOZx/Weh+Q1Q3bsxI7yKJhc3d5ybS15/aJ20u8Ui6CPMuvOrP6MDfSAod8ZknieqxOhAU6IW2obIGVX2/StY="
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "aHcbLGrbgj8jC6841Lnkp+79lNfe1+/Mu88HuqdNMeZ+kQFyAVSqJNkgzvgEvJ5UWW/Pv3mPgmj9+jwkQq5K1bh3EDGWNwal3AT/r50Yd4lRMUILVusKkL5LSbRz36YMwcJKL5kSEfvVcCLCZX30t+m/icCsPqZuQuIL1MC4nKcfLr9GzVW6Dju81RBA0smLBK1UwUQwibeb/sVDYn6ntlU35eu+Wx43qhyB64sV/cZ5o/wdGN+545vuaWOjGS1tdYwdGQjSGTmfUl+0da2axcmQCAWEsoxtHZ5txt9ZXz2qbBtvgrecvxNU4C2nJEyH8OJkzTclcB592G3cs9b34rIahVV6Pvh5HTDUwmj7Ms5Pg+Qg8gkvJ5NHg4dzkY5aMCDisJeGO0pkeocRz2BwhuV6ECNwSCAv8K0Zk7nPQByRCirnkZt4T3b5s/8ytZPyWYBfeKTjhJtPIB7ygphdCN2IgQHeWVPxBMiE9CXE7E3fXnfl2G878p8+hnRMyaMWQM3uWyTQh5m2zFROg97AsTiacmSYy69uiamrm1+vVTJhQQwipCFWDCDS4UKtEz+b1VxZRh6/MGRhz0jx2tsmYYbx+jQzToYSAtFEsRg975bevya+FJbPVv4Pqc6qpw345FPvIpnUVtEBvwY48u6qoJM8chlvUYnJGph+eFUNhOg="
+
+install:
+  - git clone https://github.com/Opetushallitus/ci-tools.git
+  - source ci-tools/common/setup-tools.sh
+  - export ARTIFACT_NAME="fake-suomifi-tunnistus"
+
+script:
+  - mvn clean package -Dbranch=${TRAVIS_BRANCH} -Drevision=${TRAVIS_COMMIT} -DbuildNumber=${TRAVIS_BUILD_NUMBER}
+
+  - mv target/fake-suomifi-tunnistus.war $DOCKER_BUILD_DIR/artifact/$ARTIFACT_NAME.jar
+  - cp -vr oph-configuration $DOCKER_BUILD_DIR/config/
+
+  - export BASE_IMAGE="baseimage-fatjar:jdk11"
+  - ./ci-tools/common/pull-image.sh
+  - ./ci-tools/build/build-fatjar.sh $ARTIFACT_NAME
+
+deploy:
+  - provider: script
+    script: ./ci-tools/build/upload-image.sh $ARTIFACT_NAME
+    on:
+      all_branches: true
