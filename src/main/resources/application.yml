@@ -14,6 +14,10 @@ management:
     health:
       enabled: true
 cas:
+  authn:
+    samlIdp:
+      entityId: ${cas.server.prefix}
+      scope: ${cas.custom.properties.host}
   custom:
     properties:
       host: localhost:${server.port}

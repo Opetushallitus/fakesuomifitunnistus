@@ -1,4 +1,8 @@
 cas:
+    authn:
+        samlIdp:
+            metadata:
+                location: {{ fake_suomifi_tunnistus_saml_location }}
     custom:
         properties:
             host: {{ host_oppija }}
@@ -10,6 +14,9 @@ cas:
                 secure: true
                 scheme: https
                 protocol: HTTP/1.1
+    serviceRegistry:
+        yaml:
+            location: {{ fake_suomifi_tunnistus_services_location }}
     tgc:
         secure: true
     warningCookie:

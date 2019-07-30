@@ -38,6 +38,14 @@
             <artifactId>cas-server-webapp${cas.app-server}</artifactId>
             <type>war</type>
         </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-saml-idp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-yaml-service-registry</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
