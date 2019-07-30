@@ -1,0 +1,16 @@
+cas:
+    custom:
+        properties:
+            host: {{ host_oppija }}
+            scheme: https
+    server:
+        tomcat:
+            httpProxy:
+                enabled: true
+                secure: true
+                scheme: https
+                protocol: HTTP/1.1
+    tgc:
+        secure: true
+    warningCookie:
+        secure: true

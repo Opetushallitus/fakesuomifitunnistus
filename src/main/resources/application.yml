@@ -4,13 +4,37 @@ server:
     context-path: /fake-suomifi-tunnistus
   ssl:
     enabled: false
+  tomcat:
+    portHeader:
+    protocolHeader:
+    remoteIpHeader:
+  useForwardHeaders: false
 management:
   endpoint:
     health:
       enabled: true
 cas:
+  custom:
+    properties:
+      host: localhost:${server.port}
+      scheme: http
+  httpWebRequest:
+    header:
+      xframe: false
+      xss: false
+      xcontent: false
+      hsts: false
   monitor:
     endpoints:
       endpoint:
         health:
           access: PERMIT
+  server:
+    name: ${cas.custom.properties.scheme}://${cas.custom.properties.host}
+    prefix: ${cas.server.name}${server.servlet.context-path}
+  tgc:
+    path: ${server.servlet.context-path}
+    secure: false
+  warningCookie:
+    path: ${server.servlet.context-path}
+    secure: false
