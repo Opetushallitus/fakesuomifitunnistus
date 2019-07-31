@@ -46,6 +46,15 @@
             <groupId>org.apereo.cas</groupId>
             <artifactId>cas-server-support-yaml-service-registry</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-authentication-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jorilytter.utils</groupId>
+            <artifactId>identification</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
