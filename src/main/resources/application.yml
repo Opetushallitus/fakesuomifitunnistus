@@ -35,6 +35,8 @@ cas:
       endpoint:
         health:
           access: PERMIT
+  samlCore:
+    securityManager: com.sun.org.apache.xerces.internal.util.SecurityManager
   server:
     name: ${cas.custom.properties.scheme}://${cas.custom.properties.host}
     prefix: ${cas.server.name}${server.servlet.context-path}
