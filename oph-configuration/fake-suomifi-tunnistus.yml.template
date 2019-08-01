@@ -7,6 +7,9 @@ cas:
         properties:
             host: {{ host_oppija }}
             scheme: https
+            url-virkailija: https://{{ host_virkailija }}
+            service-username: {{ fake_suomifi_tunnistus_service_username }}
+            service-password: {{ fake_suomifi_tunnistus_service_password }}
     server:
         tomcat:
             httpProxy:

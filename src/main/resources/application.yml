@@ -24,6 +24,9 @@ cas:
     properties:
       host: localhost:${server.port}
       scheme: http
+      url-virkailija: http://localhost:${server.port}
+      service-username: user
+      service-password: pass
   httpWebRequest:
     header:
       xframe: false

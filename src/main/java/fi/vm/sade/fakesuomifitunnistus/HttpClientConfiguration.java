@@ -1,5 +1,8 @@
 package fi.vm.sade.fakesuomifitunnistus;
 
+import fi.vm.sade.javautils.http.OphHttpClient;
+import fi.vm.sade.javautils.http.auth.CasAuthenticator;
+import fi.vm.sade.properties.OphProperties;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.message.BasicHeader;
 import org.apereo.cas.configuration.CasConfigurationProperties;
@@ -30,6 +33,17 @@ public class HttpClientConfiguration {
         this.casProperties = casProperties;
         this.trustStoreSslSocketFactory = trustStoreSslSocketFactory;
         this.hostnameVerifier = hostnameVerifier;
+    }
+
+    @Bean
+    public OphHttpClient oppijanumerorekisteriHttpClient(OphProperties properties) {
+        CasAuthenticator authenticator = new CasAuthenticator.Builder()
+                .webCasUrl(properties.url("cas.base"))
+                .username(properties.require("service-username"))
+                .password(properties.require("service-password"))
+                .casServiceUrl(properties.url("oppijanumerorekisteri-service.login"))
+                .build();
+        return new OphHttpClient.Builder(CALLER_ID).authenticator(authenticator).build();
     }
 
     // override cas httpclient to include caller-id header
