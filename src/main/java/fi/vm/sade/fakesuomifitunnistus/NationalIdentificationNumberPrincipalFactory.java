@@ -13,6 +13,7 @@ public class NationalIdentificationNumberPrincipalFactory implements PrincipalFa
     private static final String ATTRIBUTE_DISPLAY_NAME = "displayName";
     private static final String ATTRIBUTE_GIVEN_NAME = "givenName";
     private static final String ATTRIBUTE_SURNAME = "sn";
+    private static final String ATTRIBUTES_FIRST_NAME = "FirstName";
 
     private final PrincipalFactory principalFactory = new DefaultPrincipalFactory();
     private final OppijanumerorekisteriClient oppijanumerorekisteriClient;
@@ -35,6 +36,7 @@ public class NationalIdentificationNumberPrincipalFactory implements PrincipalFa
         attributes.put(ATTRIBUTE_DISPLAY_NAME, person.getDisplayName());
         attributes.put(ATTRIBUTE_GIVEN_NAME, person.getGivenName());
         attributes.put(ATTRIBUTE_SURNAME, person.surname);
+        attributes.put(ATTRIBUTES_FIRST_NAME, person.firstNames);
 
         return principalFactory.createPrincipal(id, attributes);
     }
