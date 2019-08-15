@@ -1,6 +1,5 @@
 package fi.vm.sade.fakesuomifitunnistus;
 
-import fi.utils.identification.SocialSecurityNumber;
 import org.apereo.cas.authentication.AuthenticationHandlerExecutionResult;
 import org.apereo.cas.authentication.PreventedException;
 import org.apereo.cas.authentication.credential.UsernamePasswordCredential;
@@ -20,7 +19,7 @@ public class NationalIdentificationNumberAuthenticationHandler extends AbstractU
     @Override
     protected AuthenticationHandlerExecutionResult authenticateUsernamePasswordInternal(UsernamePasswordCredential credential, String originalPassword) throws GeneralSecurityException, PreventedException {
         String username = credential.getUsername();
-        if (SocialSecurityNumber.validate(username)) {
+        if (HetuUtils.hetuIsValid(username)) {
             return createHandlerResult(credential, principalFactory.createPrincipal(username));
         }
         throw new FailedLoginException(String.format("Username '%s' is not valid national identification number", username));
