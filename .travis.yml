@@ -15,7 +15,7 @@ env:
     - secure: "aHcbLGrbgj8jC6841Lnkp+79lNfe1+/Mu88HuqdNMeZ+kQFyAVSqJNkgzvgEvJ5UWW/Pv3mPgmj9+jwkQq5K1bh3EDGWNwal3AT/r50Yd4lRMUILVusKkL5LSbRz36YMwcJKL5kSEfvVcCLCZX30t+m/icCsPqZuQuIL1MC4nKcfLr9GzVW6Dju81RBA0smLBK1UwUQwibeb/sVDYn6ntlU35eu+Wx43qhyB64sV/cZ5o/wdGN+545vuaWOjGS1tdYwdGQjSGTmfUl+0da2axcmQCAWEsoxtHZ5txt9ZXz2qbBtvgrecvxNU4C2nJEyH8OJkzTclcB592G3cs9b34rIahVV6Pvh5HTDUwmj7Ms5Pg+Qg8gkvJ5NHg4dzkY5aMCDisJeGO0pkeocRz2BwhuV6ECNwSCAv8K0Zk7nPQByRCirnkZt4T3b5s/8ytZPyWYBfeKTjhJtPIB7ygphdCN2IgQHeWVPxBMiE9CXE7E3fXnfl2G878p8+hnRMyaMWQM3uWyTQh5m2zFROg97AsTiacmSYy69uiamrm1+vVTJhQQwipCFWDCDS4UKtEz+b1VxZRh6/MGRhz0jx2tsmYYbx+jQzToYSAtFEsRg975bevya+FJbPVv4Pqc6qpw345FPvIpnUVtEBvwY48u6qoJM8chlvUYnJGph+eFUNhOg="
 
 install:
-  - git clone https://github.com/Opetushallitus/ci-tools.git
+  - git clone https://github.com/Opetushallitus/ci-tools.git --branch PP-357_458_readonly_container_nonroot_user
   - source ci-tools/common/setup-tools.sh
   - export ARTIFACT_NAME="fake-suomifi-tunnistus"
 
@@ -25,7 +25,7 @@ script:
   - mv target/fake-suomifi-tunnistus.war $DOCKER_BUILD_DIR/artifact/$ARTIFACT_NAME.jar
   - cp -vr oph-configuration $DOCKER_BUILD_DIR/config/
 
-  - export BASE_IMAGE="baseimage-fatjar:jdk11"
+  - export BASE_IMAGE="baseimage-fatjar:ci-140"
   - ./ci-tools/common/pull-image.sh
   - ./ci-tools/build/build-fatjar.sh $ARTIFACT_NAME
 
