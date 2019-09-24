@@ -11,7 +11,7 @@
     <properties>
         <java.version>11</java.version>
         <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
-        <cas.version>6.0.5</cas.version>
+        <cas.version>6.0.5.1</cas.version>
         <cas.app-server>-tomcat</cas.app-server>
         <start-class>org.apereo.cas.web.CasWebApplication</start-class>
         <maven.compiler.source>${java.version}</maven.compiler.source>
